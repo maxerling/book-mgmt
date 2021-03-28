@@ -21,7 +21,7 @@ public class DatabaseCon {
 
 
 
-    public Connection getConnection() throws SQLException {
+    public Connection getConnection() {
         try {
             Properties prop = new Properties();
             FileInputStream in = new FileInputStream("resources/app.properties");
@@ -36,6 +36,12 @@ public class DatabaseCon {
             ioException.printStackTrace();
         }
 
-        return DriverManager.getConnection(this.connection,this.user,this.pass);
+        try {
+            return DriverManager.getConnection(this.connection,this.user,this.pass);
+        } catch (SQLException sql) {
+            sql.printStackTrace();
+        }
+
+        return null;
     }
 }
