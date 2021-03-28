@@ -3,13 +3,13 @@
 basic book management site which uses:
 
 - Java
--HTML
--Maven
--MySQL
--Serverlets
--Thymleaf
--JDBC
--DAO
--Tomcat
+- HTML
+- Maven
+- MySQL
+- Serverlets
+- Thymleaf
+- JDBC
+- DAO
+- Tomcat
 
 
