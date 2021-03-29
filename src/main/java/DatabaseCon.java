@@ -1,6 +1,8 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -24,7 +26,7 @@ public class DatabaseCon {
     public Connection getConnection() {
         try {
             Properties prop = new Properties();
-            FileInputStream in = new FileInputStream("resources/app.properties");
+            FileInputStream in = new FileInputStream("C:\\Users\\m\\Desktop\\Programming\\2021\\book-mgmt\\src\\main\\resources\\app.properties");
             prop.load(in);
             this.user = prop.getProperty("dbuser");
             this.pass = prop.getProperty("dbpass");
