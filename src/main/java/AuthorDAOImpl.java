@@ -1,6 +1,10 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created by Max Erling
@@ -11,11 +15,9 @@ import java.util.List;
 public class AuthorDAOImpl implements AuthorDAO {
 
     private List<Author> authors;
-    private final Connection con;
 
     public AuthorDAOImpl() {
         this.authors  = new ArrayList<>();
-        this.con = (Connection) new DatabaseCon().getConnection();
 
 
     }
@@ -23,7 +25,7 @@ public class AuthorDAOImpl implements AuthorDAO {
     @Override
     public List<Author> getAllAuthors() {
         String sqlStm = "SELECT * FROM author";
-        try (con) {
+        try (Connection con = getConnection()) {
             Statement stm = con.createStatement();
 
             ResultSet rs = stm.executeQuery(sqlStm);
@@ -43,7 +45,7 @@ public class AuthorDAOImpl implements AuthorDAO {
     @Override
     public void createAuthor(Author author) {
         String sql = "INSERT INTO author(first_name,last_name) VALUES (?,?)";
-         try (con) {
+         try (Connection con = getConnection()) {
              PreparedStatement prepStm = con.prepareStatement(sql);
              prepStm.setString(1,author.getFirstName());
              prepStm.setString(2,author.getLastName());
@@ -55,19 +57,54 @@ public class AuthorDAOImpl implements AuthorDAO {
 
     @Override
     public Author readAuthor(int id) {
+        try (Connection con = getConnection()) {
 
+        } catch (SQLException sqlError) {
+            System.out.println("SQL Error: " + sqlError.getMessage());
+        }
         return null;
     }
 
     @Override
     public void updateAuthor(Author author) {
+        try (Connection con = getConnection()) {
 
+        } catch (SQLException sqlError) {
+            System.out.println("SQL Error: " + sqlError.getMessage());
+        }
 
     }
 
     @Override
     public void deleteAuthor(String first_name, String last_name) {
+        try (Connection con = getConnection()) {
 
+        } catch (SQLException sqlError) {
+            System.out.println("SQL Error: " + sqlError.getMessage());
+        }
+
+    }
+
+    public Connection getConnection() throws SQLException {
+        String user = "";
+        String pass = "";
+        String connection = "";
+        try {
+            Properties prop = new Properties();
+            FileInputStream in = new FileInputStream("C:\\Users\\m\\Desktop\\Programming\\2021\\book-mgmt\\src\\main\\resources\\app.properties");
+            prop.load(in);
+             user = prop.getProperty("dbuser");
+             pass = prop.getProperty("dbpass");
+             connection = prop.getProperty("connection");
+
+        } catch (FileNotFoundException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
+
+        return DriverManager.getConnection(connection,user,pass);
 
     }
 }
