@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +42,15 @@ public class AuthorDAOImpl implements AuthorDAO {
 
     @Override
     public void createAuthor(Author author) {
-
+        String sql = "INSERT INTO author(first_name,last_name) VALUES (?,?)";
+         try (con) {
+             PreparedStatement prepStm = con.prepareStatement(sql);
+             prepStm.setString(1,author.getFirstName());
+             prepStm.setString(2,author.getLastName());
+             prepStm.executeUpdate();
+         } catch (SQLException sqlError) {
+             System.out.println("SQL Error: " + sqlError.getMessage());
+         }
     }
 
     @Override
