@@ -7,7 +7,6 @@
 public class Main {
     public static void main(String[] args) {
         AuthorDAOImpl authorImpl = new AuthorDAOImpl();
-        System.out.println(authorImpl.getAllAuthors());
-        authorImpl.createAuthor(new Author(0,"Potato","Head"));
+        System.out.println(authorImpl.readAuthor(1));
     }
 }

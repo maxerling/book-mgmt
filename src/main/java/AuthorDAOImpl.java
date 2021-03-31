@@ -57,12 +57,20 @@ public class AuthorDAOImpl implements AuthorDAO {
 
     @Override
     public Author readAuthor(int id) {
+        Author temp = null;
+        String sql = "SELECT * FROM author WHERE author.id = ?" ;
         try (Connection con = getConnection()) {
+            PreparedStatement prepStm = con.prepareStatement(sql);
+            prepStm.setInt(1,id);
+            ResultSet rs = prepStm.executeQuery();
+            if (rs.next()) {
+                temp = new Author(rs.getInt("id"),rs.getString("first_name"),rs.getString("last_name"));
+            }
 
         } catch (SQLException sqlError) {
             System.out.println("SQL Error: " + sqlError.getMessage());
         }
-        return null;
+        return temp;
     }
 
     @Override
