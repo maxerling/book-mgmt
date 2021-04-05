@@ -75,7 +75,13 @@ public class AuthorDAOImpl implements AuthorDAO {
 
     @Override
     public void updateAuthor(Author author) {
+        String sql = "UPDATE author SET author.first_name = ?, author.last_name = ? WHERE author.id = ?";
         try (Connection con = getConnection()) {
+            PreparedStatement prepStm = con.prepareStatement(sql);
+            prepStm.setString(1,author.getFirstName());
+            prepStm.setString(2,author.getLastName());
+            prepStm.setInt(3,author.getId());
+            prepStm.execute();
         } catch (SQLException sqlError) {
             System.out.println("SQL Error: " + sqlError.getMessage());
         }
