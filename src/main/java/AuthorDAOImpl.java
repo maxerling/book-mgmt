@@ -76,7 +76,6 @@ public class AuthorDAOImpl implements AuthorDAO {
     @Override
     public void updateAuthor(Author author) {
         try (Connection con = getConnection()) {
-
         } catch (SQLException sqlError) {
             System.out.println("SQL Error: " + sqlError.getMessage());
         }
@@ -85,8 +84,12 @@ public class AuthorDAOImpl implements AuthorDAO {
 
     @Override
     public void deleteAuthor(String first_name, String last_name) {
+        String sql = "DELETE FROM author WHERE author.first_name = ? AND author.last_name = ?";
         try (Connection con = getConnection()) {
-
+            PreparedStatement prepStm = con.prepareStatement(sql);
+            prepStm.setString(1,first_name);
+            prepStm.setString(2,last_name);
+            prepStm.execute();
         } catch (SQLException sqlError) {
             System.out.println("SQL Error: " + sqlError.getMessage());
         }
