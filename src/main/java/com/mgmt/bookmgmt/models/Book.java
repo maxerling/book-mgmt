@@ -1,3 +1,5 @@
+package com.mgmt.bookmgmt.models;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,10 @@ public class Book {
         this.title = title;
         this.price = price;
         this.authors = new ArrayList<>();
+    }
+
+    public Book() {
+
     }
 
     public int getId() {
@@ -54,7 +60,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
+        return "com.mgmt.bookmgmt.models.Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", price=" + price +

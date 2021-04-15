@@ -1,3 +1,7 @@
+package com.mgmt.bookmgmt.dao;
+
+import com.mgmt.bookmgmt.models.Book;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,14 +27,14 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public List<Book> getAllBooks() {
         String sql = "SELECT * FROM book";
-        List<Book> books = new ArrayList<>();
         try (Connection con = getConnection()) {
             Statement stm = con.createStatement();
             ResultSet rs = stm.executeQuery(sql);
-
+            System.out.println(rs);
             while (rs.next()) {
                 Book temp = new Book(rs.getInt("id"),rs.getString("title"),rs.getInt("price"));
                 books.add(temp);
+                System.out.println(temp);
 
             }
 
@@ -70,6 +74,26 @@ public class BookDAOImpl implements BookDAO {
         }
         return temp;
     }
+
+
+    @Override
+    public Book readBook(String title) {
+        Book temp = null;
+        String sql = "SELECT * FROM book WHERE book.title = ?" ;
+        try (Connection con = getConnection()) {
+            PreparedStatement prepStm = con.prepareStatement(sql);
+            prepStm.setString(1,title);
+            ResultSet rs = prepStm.executeQuery();
+            if (rs.next()) {
+                temp = new Book(rs.getInt("id"),rs.getString("title"),rs.getInt("price"));
+            }
+        } catch (SQLException sqlError) {
+            System.out.println("SQL Error: " + sqlError.getMessage());
+        }
+        return temp;
+    }
+
+
 
     @Override
     public void updateBook(Book book) {

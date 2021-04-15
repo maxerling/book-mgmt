@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Books Store Application</title>
+</head>
+<body>
+<center>
+    <h1>Books Management</h1>
+    <h2>
+        <a href="/new">Add New Book</a>
+        &nbsp;&nbsp;&nbsp;
+        <a href="/list">List All Books</a>
+
+    </h2>
+</center>
+<div align="center">
+
+    <span th:if="${book != null}">
+        <form th:action="@{/edit}" method="post" />
+    </span>
+    <span th:if="${newBook != null}">
+        <form th:action="@{/create}" method="post" th:object="${newBook}"/>
+    </span>
+    <table border="1" cellpadding="5">
+        <caption>
+            <h2>
+                <span th:if="${book != null}">
+                    Edit Book
+                </span>
+                <span th:if="${newBook != null}">
+                    Add New Book
+                </span>
+            </h2>
+        </caption>
+        <span th:if="${book != null}">
+            <input type="hidden" name="id" th:attr="value=${book.id}" />
+
+        <tr>
+            <th>Title: </th>
+            <td>
+                <input type="text" name="title" size="45"
+                       th:attr="value=${book.title}" />
+            </td>
+        </tr>
+        <tr>
+            <th>Author: </th>
+            <td>
+                <input type="text" name="author" size="45"
+                       th:attr="value=x"  />
+            </td>
+        </tr>
+        <tr>
+            <th>Price: </th>
+            <td>
+                <input type="text" name="price" size="5"
+                       th:attr="value=${book.price}"  />
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" value="Save" />
+            </td>
+        </tr>
+            </span>
+
+        <span th:if="${newBook != null}">
+               <input type="hidden" name="id"  th:field="*{newBook.id}" />
+
+        <tr>
+            <th>Title: </th>
+            <td>
+                <input type="text" name="title" size="45" th:field="*{newBook.title}"/>
+            </td>
+        </tr>
+        <tr>
+            <th>Author: </th>
+            <td>
+                <input type="text" name="author" size="45"
+                        />
+            </td>
+        </tr>
+        <tr>
+            <th>Price: </th>
+            <td>
+                <input type="text" name="price" size="5" th:field="*{newBook.price}"/>
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" value="Save" />
+            </td>
+        </tr>
+
+        </span>
+    </table>
+    </form>
+</div>
+</body>
+</html>

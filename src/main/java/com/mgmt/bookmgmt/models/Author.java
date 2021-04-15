@@ -1,3 +1,5 @@
+package com.mgmt.bookmgmt.models;
+
 /**#
  * Created by Max Erling
  * Date: 2021-03-27
@@ -42,7 +44,7 @@ public class Author {
 
     @Override
     public String toString() {
-        return "Author{" +
+        return "com.mgmt.bookmgmt.models.Author{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
