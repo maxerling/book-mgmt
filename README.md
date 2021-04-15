@@ -5,9 +5,8 @@ basic book management site which uses:
 - Java
 - Maven
 - MySQL
-- Serverlets
 - Thymleaf
-- JDBC
+- Spring Boot
 - DAO
 - Tomcat
 
