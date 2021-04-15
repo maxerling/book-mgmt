@@ -1,3 +1,7 @@
+package com.mgmt.bookmgmt.dao;
+
+import com.mgmt.bookmgmt.models.Author;
+
 import java.util.List;
 
 /**
