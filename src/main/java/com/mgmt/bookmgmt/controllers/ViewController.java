@@ -13,20 +13,21 @@ import java.util.List;
  * Date: 2021-04-11
  * Copyright: MIT
  * Class: Java20B
+ *
+ *
+ * Goal: Update page correctly withhout handling it locally
  */
 @Controller
 public class ViewController {
 
     private BookDAOImpl bookDao;
-    private List<Book> books;
 
     public ViewController() {
         this.bookDao = new BookDAOImpl();
-        this.books = bookDao.getAllBooks();
-
     }
     @GetMapping("/")
     public String getIndex(Model model) {
+        List<Book> books = bookDao.getAllBooks();;
         model.addAttribute("books",books);
         return "index.html";
     }
@@ -41,7 +42,7 @@ public class ViewController {
     @PostMapping(value = "/create")
     public String submitForm(@ModelAttribute("newBook") Book book) {
         bookDao.createBook(book);
-        books.add(bookDao.readBook(book.getTitle()));
+        //books.add(bookDao.readBook(book.getTitle()));
         return "book_added.html";
 
     }
@@ -58,13 +59,13 @@ public class ViewController {
     public String submitEditedForm(@ModelAttribute("book") Book book) {
         bookDao.updateBook(book);
         int index = -1;
-        for (Book b : books) {
+        /*for (Book b : books) {
             if (b.getId() == book.getId()) {
                 index = books.indexOf(b);
             }
         }
 
-        books.set(index,book);
+        books.set(index,book);*/
         return "book_edited";
     }
 
@@ -75,13 +76,14 @@ public class ViewController {
         int index = -1;
         Book book = bookDao.readBook(id);
         model.addAttribute("book",book);
-        removeFromList(index,id);
+        //removeFromList(index,id);
         bookDao.deleteBook(book.getTitle());
         return "delete.html";
     }
 
     @GetMapping("/list")
     public String listAllBooks(Model model) {
+        List<Book> books = bookDao.getAllBooks();;
         model.addAttribute("books",books);
         return "allBooks";
     }
@@ -89,14 +91,6 @@ public class ViewController {
 
 
 
-public void removeFromList(int i, int id) {
-    for (Book b : books) {
-        if (b.getId() == id) {
-            i = books.indexOf(b);
-        }
-    }
 
-    books.remove(i);
-}
 
 }
