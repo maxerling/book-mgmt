@@ -7,6 +7,7 @@ basic book management site which uses:
 - MySQL
 - Thymleaf
 - Spring Boot
+- MVC
 - DAO
 - Service Layer
 
