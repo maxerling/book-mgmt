@@ -8,6 +8,6 @@ basic book management site which uses:
 - Thymleaf
 - Spring Boot
 - DAO
-- Tomcat
+- Service Layer
 
 
