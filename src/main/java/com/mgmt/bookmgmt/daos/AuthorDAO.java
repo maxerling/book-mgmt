@@ -1,4 +1,4 @@
-package com.mgmt.bookmgmt.dao;
+package com.mgmt.bookmgmt.daos;
 
 import com.mgmt.bookmgmt.models.Author;
 

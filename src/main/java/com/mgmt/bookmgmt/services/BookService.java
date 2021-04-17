@@ -1,7 +1,9 @@
 package com.mgmt.bookmgmt.services;
 
-import com.mgmt.bookmgmt.dao.BookDAOImpl;
+import com.mgmt.bookmgmt.daos.BookDAOImpl;
 import com.mgmt.bookmgmt.models.Book;
+
+import java.util.List;
 
 /**
  * Created by Max Erling
@@ -22,20 +24,20 @@ public class BookService {
     }
     //update
     public void updateBook(Book book) {
-        bookDAO.updateBook( book);
+        bookDAO.updateBook(book);
     }
     //select book
-    public void selectBookById(int id) {
-        bookDAO.readBook(id);
+    public Book selectBookById(int id) {
+       return bookDAO.readBook(id);
     }
 
-    public void selectBookByTitle(String title) {
-        bookDAO.readBook(title);
+    public Book selectBookByTitle(String title) {
+        return bookDAO.readBook(title);
     }
 
     //select books
-    public void selectBooks() {
-        bookDAO.getAllBooks();
+    public List<Book> selectBooks() {
+       return bookDAO.getAllBooks();
     }
     //delete book
     public void deleteBookByTitle(String title) {
