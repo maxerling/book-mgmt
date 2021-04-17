@@ -1,7 +1,8 @@
 package com.mgmt.bookmgmt.controllers;
 
-import com.mgmt.bookmgmt.dao.BookDAOImpl;
+import com.mgmt.bookmgmt.daos.BookDAOImpl;
 import com.mgmt.bookmgmt.models.Book;
+import com.mgmt.bookmgmt.services.BookService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,15 +16,15 @@ import java.util.List;
  */
 @RestController
 public class BookController {
-    private BookDAOImpl bookDao;
+    private BookService bookService;
 
 
     public BookController() {
-        this.bookDao = new BookDAOImpl();
+       this.bookService = new BookService();
     }
 
-    @GetMapping("/books")
+    @GetMapping("/books/all")
         public List<Book> getBooks() {
-        return bookDao.getAllBooks();
+        return bookService.selectBooks();
         }
 }

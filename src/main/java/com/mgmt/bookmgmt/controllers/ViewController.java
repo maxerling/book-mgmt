@@ -1,7 +1,8 @@
 package com.mgmt.bookmgmt.controllers;
 
-import com.mgmt.bookmgmt.dao.BookDAOImpl;
+import com.mgmt.bookmgmt.daos.BookDAOImpl;
 import com.mgmt.bookmgmt.models.Book;
+import com.mgmt.bookmgmt.services.BookService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,20 +14,21 @@ import java.util.List;
  * Date: 2021-04-11
  * Copyright: MIT
  * Class: Java20B
+ *
+ *
+ * Goal: Update page correctly withhout handling it locally
  */
 @Controller
 public class ViewController {
 
-    private BookDAOImpl bookDao;
-    private List<Book> books;
+    private BookService bookService;
 
     public ViewController() {
-        this.bookDao = new BookDAOImpl();
-        this.books = bookDao.getAllBooks();
-
+        this.bookService = new BookService();
     }
     @GetMapping("/")
     public String getIndex(Model model) {
+        List<Book> books = bookService.selectBooks();;
         model.addAttribute("books",books);
         return "index.html";
     }
@@ -40,15 +42,15 @@ public class ViewController {
 
     @PostMapping(value = "/create")
     public String submitForm(@ModelAttribute("newBook") Book book) {
-        bookDao.createBook(book);
-        books.add(bookDao.readBook(book.getTitle()));
+        bookService.createBook(book);
+        //books.add(bookDao.readBook(book.getTitle()));
         return "book_added.html";
 
     }
 
     @GetMapping("/edit")
     public String editBook(@RequestParam int id, Model model) {
-        Book book = bookDao.readBook(id);
+        Book book = bookService.selectBookById(id);
         model.addAttribute("book",book);
         return "bookform.html";
     }
@@ -56,15 +58,15 @@ public class ViewController {
 
     @PostMapping("/edit")
     public String submitEditedForm(@ModelAttribute("book") Book book) {
-        bookDao.updateBook(book);
+        bookService.updateBook(book);
         int index = -1;
-        for (Book b : books) {
+        /*for (Book b : books) {
             if (b.getId() == book.getId()) {
                 index = books.indexOf(b);
             }
         }
 
-        books.set(index,book);
+        books.set(index,book);*/
         return "book_edited";
     }
 
@@ -73,15 +75,15 @@ public class ViewController {
     @GetMapping(value = "/delete")
     public String deleteBook(@RequestParam int id, Model model) {
         int index = -1;
-        Book book = bookDao.readBook(id);
+        Book book = bookService.selectBookById(id);
         model.addAttribute("book",book);
-        removeFromList(index,id);
-        bookDao.deleteBook(book.getTitle());
+        bookService.deleteBookByTitle(book.getTitle());
         return "delete.html";
     }
 
     @GetMapping("/list")
     public String listAllBooks(Model model) {
+        List<Book> books = bookService.selectBooks();;
         model.addAttribute("books",books);
         return "allBooks";
     }
@@ -89,14 +91,8 @@ public class ViewController {
 
 
 
-public void removeFromList(int i, int id) {
-    for (Book b : books) {
-        if (b.getId() == id) {
-            i = books.indexOf(b);
-        }
-    }
 
-    books.remove(i);
-}
+
+
 
 }

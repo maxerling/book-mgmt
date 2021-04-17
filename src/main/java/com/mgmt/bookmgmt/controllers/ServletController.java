@@ -1,16 +1,5 @@
 package com.mgmt.bookmgmt.controllers;
 
-import com.mgmt.bookmgmt.dao.BookDAOImpl;
-import com.mgmt.bookmgmt.models.Book;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
-
 /**
  * Created by Max Erling
  * Date: 2021-04-13

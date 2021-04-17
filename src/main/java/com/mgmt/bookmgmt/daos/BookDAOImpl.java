@@ -1,4 +1,4 @@
-package com.mgmt.bookmgmt.dao;
+package com.mgmt.bookmgmt.daos;
 
 import com.mgmt.bookmgmt.models.Book;
 
@@ -18,14 +18,10 @@ import java.util.Properties;
  */
 public class BookDAOImpl implements BookDAO {
 
-    private List<Book> books;
-
-    public BookDAOImpl() {
-        this.books = new ArrayList<>();
-    }
 
     @Override
     public List<Book> getAllBooks() {
+        List<Book> books = new ArrayList<>();
         String sql = "SELECT * FROM book";
         try (Connection con = getConnection()) {
             Statement stm = con.createStatement();
