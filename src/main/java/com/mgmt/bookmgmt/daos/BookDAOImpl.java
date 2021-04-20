@@ -26,11 +26,10 @@ public class BookDAOImpl implements BookDAO {
         try (Connection con = getConnection()) {
             Statement stm = con.createStatement();
             ResultSet rs = stm.executeQuery(sql);
-            System.out.println(rs);
             while (rs.next()) {
-                Book temp = new Book(rs.getInt("id"),rs.getString("title"),rs.getInt("price"));
-                books.add(temp);
+                Book temp = new Book(rs.getInt("id"),rs.getString("title"),rs.getInt("price"),rs.getString("author"));
                 System.out.println(temp);
+                books.add(temp);
 
             }
 
@@ -42,11 +41,12 @@ public class BookDAOImpl implements BookDAO {
 
     @Override
     public void createBook(Book book) {
-        String sql = "INSERT INTO book(title,price) VALUES (?,?)";
+        String sql = "INSERT INTO book(title,price,author) VALUES (?,?,?)";
         try (Connection con = getConnection()) {
             PreparedStatement prepStm = con.prepareStatement(sql);
             prepStm.setString(1,book.getTitle());
             prepStm.setInt(2,book.getPrice());
+            prepStm.setString(1,book.getAuthor());
             prepStm.executeUpdate();
         } catch (SQLException sqlError) {
             System.out.println("SQL Error: " + sqlError.getMessage());
@@ -63,7 +63,7 @@ public class BookDAOImpl implements BookDAO {
             prepStm.setInt(1,id);
             ResultSet rs = prepStm.executeQuery();
             if (rs.next()) {
-                temp = new Book(rs.getInt("id"),rs.getString("title"),rs.getInt("price"));
+                temp = new Book(rs.getInt("id"),rs.getString("title"),rs.getInt("price"),rs.getString("author"));
             }
         } catch (SQLException sqlError) {
             System.out.println("SQL Error: " + sqlError.getMessage());
@@ -81,7 +81,7 @@ public class BookDAOImpl implements BookDAO {
             prepStm.setString(1,title);
             ResultSet rs = prepStm.executeQuery();
             if (rs.next()) {
-                temp = new Book(rs.getInt("id"),rs.getString("title"),rs.getInt("price"));
+                temp = new Book(rs.getInt("id"),rs.getString("title"),rs.getInt("price"),rs.getString("author"));
             }
         } catch (SQLException sqlError) {
             System.out.println("SQL Error: " + sqlError.getMessage());
@@ -93,12 +93,13 @@ public class BookDAOImpl implements BookDAO {
 
     @Override
     public void updateBook(Book book) {
-        String sql = "UPDATE book SET book.title = ?, book.price = ? WHERE book.id = ?";
+        String sql = "UPDATE book SET book.title = ?, book.price = ?, book.author = ?  WHERE book.id = ?";
         try (Connection con = getConnection()) {
             PreparedStatement prepStm = con.prepareStatement(sql);
             prepStm.setString(1,book.getTitle());
             prepStm.setInt(2,book.getPrice());
-            prepStm.setInt(3,book.getId());
+            prepStm.setString(3,book.getAuthor());
+            prepStm.setInt(4,book.getId());
             prepStm.execute();
 
         } catch (SQLException sqlError) {
@@ -126,9 +127,10 @@ public class BookDAOImpl implements BookDAO {
         String user = "";
         String pass = "";
         String connection = "";
-        try {
+        /*try {
             Properties prop = new Properties();
             FileInputStream in = new FileInputStream("C:\\Users\\m\\Desktop\\Programming\\2021\\book-mgmt\\src\\main\\resources\\app.properties");
+
             prop.load(in);
             user = prop.getProperty("dbuser");
             pass = prop.getProperty("dbpass");
@@ -138,10 +140,10 @@ public class BookDAOImpl implements BookDAO {
             fileNotFoundException.printStackTrace();
         } catch (IOException ioException) {
             ioException.printStackTrace();
-        }
+        }*/
 
 
-        return DriverManager.getConnection(connection,user,pass);
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/management?useSSL=false","root","root");
 
     }
 }

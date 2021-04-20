@@ -13,13 +13,13 @@ public class Book {
     private int id;
     private String title;
     private int price;
-    private List<Author> authors;
+    private String author;
 
-    public Book(int id, String title, int price) {
+    public Book(int id, String title, int price, String author) {
         this.id = id;
         this.title = title;
         this.price = price;
-        this.authors = new ArrayList<>();
+        this.author = author;
     }
 
     public Book() {
@@ -50,12 +50,12 @@ public class Book {
         this.price = price;
     }
 
-    public List<Author> getAuthors() {
-        return authors;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setAuthors(List<Author> authors) {
-        this.authors = authors;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class Book {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", price=" + price +
-                ", authors=" + authors +
+                ", author=" + author +
                 '}';
     }
 }
